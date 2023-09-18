@@ -13,14 +13,21 @@ feedbackForm.form.addEventListener('submit', onFormSubmit);
 function onTextInput(event) {
   formAllValue[event.target.name] = event.target.value;
   const formAllValueJSON = JSON.stringify(formAllValue);
-  console.log(formAllValueJSON);
   localStorage.setItem(STARAGE_KEY, formAllValueJSON);
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
-  event.currentTarget.reset();
-  localStorage.removeItem(STARAGE_KEY);
+  const formElem = event.currentTarget.elements,
+    email = formElem.email.value,
+    message = formElem.message.value;
+  if (email === '' || message === '') {
+    alert('ВНИМАНИЕ! Все поля должны быть заполнены!');
+  } else {
+    console.log(formAllValue);
+    event.currentTarget.reset();
+    localStorage.removeItem(STARAGE_KEY);
+  }
 }
 
 function receivinglocalStorage() {
@@ -35,5 +42,4 @@ function receivinglocalStorage() {
     }
   }
 }
-
 receivinglocalStorage();
